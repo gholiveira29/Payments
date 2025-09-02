@@ -13,11 +13,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+
 @Service
 public class PagamentoService {
 
     @Autowired
     private PagamentoRepository pagamentoRepository;
+
 
     @Autowired
     private ModelMapper modelMapper;
@@ -26,7 +28,7 @@ public class PagamentoService {
         return pagamentoRepository.findAll(paginacao).map(p -> modelMapper.map(p, PagamentoDTO.class));
     }
 
-    public PagamentoDTO obterPorId(String id) {
+    public PagamentoDTO obterPorId(Long id) {
         Pagamento pagamento = pagamentoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
         return modelMapper.map(pagamento, PagamentoDTO.class);
     }
@@ -38,14 +40,14 @@ public class PagamentoService {
         return modelMapper.map(pagamento, PagamentoDTO.class);
     }
 
-    public PagamentoDTO atualizarPagamento(String id, PagamentoDTO dto) {
+    public PagamentoDTO atualizarPagamento(Long id, PagamentoDTO dto) {
         Pagamento pagamento = modelMapper.map(dto, Pagamento.class);
         pagamento.setId(id);
         pagamento = pagamentoRepository.save(pagamento);
         return modelMapper.map(pagamento, PagamentoDTO.class);
     }
 
-    public void excluirPagamento(String id) {
+    public void excluirPagamento(Long id) {
         pagamentoRepository.deleteById(id);
     }
 

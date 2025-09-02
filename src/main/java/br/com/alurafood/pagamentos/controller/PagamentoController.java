@@ -28,7 +28,7 @@ public class PagamentoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PagamentoDTO> detalhar(@PathVariable @NotNull String id) {
+    public ResponseEntity<PagamentoDTO> detalhar(@PathVariable @NotNull Long id) {
         PagamentoDTO dto = pagamentoService.obterPorId(id);
         return ResponseEntity.ok(dto);
     }
@@ -39,5 +39,17 @@ public class PagamentoController {
         URI endereco = uriComponentsBuilder.path("/pagamentos/{id}").buildAndExpand(pagamentoDTO.getId()).toUri();
 
         return ResponseEntity.created(endereco).body(pagamentoDTO);
+    }
+
+    @PutMapping
+    public ResponseEntity<PagamentoDTO> atualizar(@PathVariable @NotNull Long id, @RequestBody @Valid PagamentoDTO dto) {
+        PagamentoDTO atualizado = pagamentoService.atualizarPagamento(id, dto);
+        return ResponseEntity.ok(atualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PagamentoDTO> remover(@PathVariable @NotNull Long id) {
+        pagamentoService.excluirPagamento(id);
+        return ResponseEntity.noContent().build();
     }
 }

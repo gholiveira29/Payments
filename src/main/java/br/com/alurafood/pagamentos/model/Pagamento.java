@@ -21,8 +21,8 @@ import java.math.BigDecimal;
 public class Pagamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @Positive
@@ -41,7 +41,7 @@ public class Pagamento {
     private String expiracao;
 
     @NotBlank
-    @Size(min=3 ,max=3)
+    @Size(min = 3, max = 3)
     private String codigo;
 
     @NotNull
